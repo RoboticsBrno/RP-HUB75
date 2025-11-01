@@ -1,0 +1,3 @@
+[submodule "sw/fw"]
+	path = sw/fw
+	url = https://github.com/caszuu/rpio

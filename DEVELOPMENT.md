@@ -1,5 +1,16 @@
 # Jak na vývoj
 
+## Rozpoložení složek
+
+```
+RP-HUB75/
+├── docs/    — MKdocs dokumentace
+├── hw/      — Návrh desky - KiCad
+└── sw/      — Software
+     ├── fw/  — Firmware pro RP2350
+     └── lib/ — Knihovna pro Jaculus
+```
+
 ## Instalace nástrojů
 Budeme potřebovat:
 - `git`
@@ -9,11 +20,11 @@ Budeme potřebovat:
 Naklonujeme si repozitář:
 
 ```bash
-git clone https://github.com/RoboticsBrno/RP-HUB75.git
+git clone --recurse-submodules https://github.com/RoboticsBrno/RP-HUB75.git
 ```
 nebo
 ```bash
-git clone git@github.com:RoboticsBrno/RP-HUB75.git
+git clone --recurse-submodules git@github.com:RoboticsBrno/RP-HUB75.git
 ```
 
 ## Konfigurace
