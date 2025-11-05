@@ -15,6 +15,7 @@
 #include <limits.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
+#include "freertos/task.h"
 #include "esp_task_wdt.h"
 #include "esp_heap_caps.h"
 
@@ -184,6 +185,12 @@ esp_err_t spi_send_and_receive(const uint8_t *tx, uint32_t tx_len, uint8_t *rx, 
             {
                 ESP_LOGW(TAG, "esp_task_wdt_reset returned 0x%x", wdt_ret);
             }
+            /* brief yield so the idle task can run and reset the idle WDT
+             * (prevents "IDLE0 task did not reset watchdog" when large
+             *  transfers monopolize CPU). Use a 1-tick delay which is
+             *  short but gives the scheduler a chance to run lower
+             *  priority tasks (including IDLE). */
+            vTaskDelay(1);
         }
 
         uint8_t tx_byte = 0x00;
