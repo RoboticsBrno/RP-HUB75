@@ -17,6 +17,8 @@
 #define RP_PIN_SCLK 13
 #define RP_PIN_CS 14
 
+
+
 #define RP_HUB75_DATA_BASE 0   // Base pin for R0, G0, B0, R1, G1, B1
 #define RP_HUB75_ROWS_BASE 6   // Base pin for A, B, C, D, E
 #define RP_HUB75_CTRL_BASE 11  // Base pin for LAT, OEn

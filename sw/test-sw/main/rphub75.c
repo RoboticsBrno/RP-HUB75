@@ -15,7 +15,7 @@
 #include <limits.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
-
+#include "esp_task_wdt.h"
 #include "esp_heap_caps.h"
 
 #include "rphub75.h"
@@ -177,6 +177,14 @@ esp_err_t spi_send_and_receive(const uint8_t *tx, uint32_t tx_len, uint8_t *rx, 
 
     for (uint32_t i = 0; i < total; ++i)
     {
+        if (i%1000 == 0){
+
+            esp_err_t wdt_ret = esp_task_wdt_reset();
+            if (wdt_ret != ESP_OK)
+            {
+                ESP_LOGW(TAG, "esp_task_wdt_reset returned 0x%x", wdt_ret);
+            }
+        }
 
         uint8_t tx_byte = 0x00;
         if (tx != NULL && i < tx_len)
