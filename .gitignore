@@ -174,3 +174,4 @@ node_modules/
 .venv/
 *.lck
 *backups
+*cache
