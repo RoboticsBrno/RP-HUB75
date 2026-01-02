@@ -6094,12 +6094,6 @@
 		(uuid "cd5a4aad-00d4-4cc2-be3b-b6b543da1681")
 	)
 	(junction
-		(at 279.4 217.17)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d56f48e4-fc19-4bba-a189-49443ae54f75")
-	)
-	(junction
 		(at 170.18 85.09)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6134,12 +6128,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f4e5890a-96ba-41a9-8d40-0f7853f1e292")
-	)
-	(junction
-		(at 279.4 209.55)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f529b130-bdfc-4be8-8d4f-94cdf5451f2c")
 	)
 	(junction
 		(at 158.75 85.09)
@@ -6650,16 +6638,6 @@
 			(type default)
 		)
 		(uuid "5c575a15-4a25-46b5-8564-39041b8c302a")
-	)
-	(wire
-		(pts
-			(xy 265.43 217.17) (xy 279.4 217.17)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5eaf9e1f-79b1-4774-9b71-de71a8ad2e91")
 	)
 	(wire
 		(pts
@@ -7530,16 +7508,6 @@
 			(type default)
 		)
 		(uuid "cdde5b1a-4c55-4e68-b3ae-611e6de58b25")
-	)
-	(wire
-		(pts
-			(xy 265.43 209.55) (xy 279.4 209.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ce5d7cf9-3fb9-40bb-988e-c66406ac1485")
 	)
 	(wire
 		(pts
@@ -9930,85 +9898,6 @@
 			(project "RP_Board"
 				(path "/b3849755-2bc4-4a7c-8e78-ae8190aa99e0"
 					(reference "C18")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 265.43 213.36 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "09b4a666-bb67-4a55-8a3b-2bd48f670afe")
-		(property "Reference" "C20"
-			(at 269.24 212.0899 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "47u"
-			(at 269.24 214.6299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
-			(at 266.3952 217.17 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 265.43 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 265.43 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C96123"
-			(at 265.43 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4aad80c6-2726-485c-84ce-a3de531a2425")
-		)
-		(pin "2"
-			(uuid "a18e2fd8-08e4-4774-8072-65fd003a1045")
-		)
-		(instances
-			(project "rp-hub75"
-				(path "/b3849755-2bc4-4a7c-8e78-ae8190aa99e0"
-					(reference "C20")
 					(unit 1)
 				)
 			)
