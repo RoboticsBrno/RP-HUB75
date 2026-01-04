@@ -36,13 +36,18 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 
 | Konektor (pin) | Signál | RP2350 |
 |---:|---|:---|
-| 1  | 5V   | 5V   |
+| 1  | GND  | GND  |
 | 2  | 5V   | 5V   |
-| 3  | GND  | GND  |
-| 4  | GND  | GND  |
-| 5  | MISO | IO19 |
-| 6  | MOSI | IO20 |
-| 7  | CS   | IO21 |
-| 8  | SCK  | IO22 |
-| 9  | X1   | IO23 |
-| 10 | X2   | IO24 |
+| 3  | 5V   | 5V   |
+| 4  | MISO | IO19 |
+| 5  | MOSI | IO20 |
+| 6  | CS   | IO21 |
+| 7  | SCK  | IO22 |
+| 8  | GND  | GND  |
+| 9  | EX1  | IO23 |
+| 10 | EX2  | IO24 |
+
+
+### DBG & PWR Led
+- Debug/status led - IO26
+- Power led - 3V3
