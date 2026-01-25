@@ -175,3 +175,5 @@ node_modules/
 *.lck
 *backups
 *cache
+
+hw/out/*
