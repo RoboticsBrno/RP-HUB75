@@ -104,3 +104,8 @@ extra_css:
 nav:
   - Domů:
       - index.md
+  - Komunikace:
+      - protocol.md
+      - protocol/ping.md
+      - protocol/screen.md
+      - protocol/usb.md

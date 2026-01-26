@@ -4,12 +4,12 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 
 <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; align-items:start;">
     <figure>
-        <img src="/assets/front.png" alt="Front pcb view" style="width:100%;height:auto;display:block;">
-        <figcaption>Front</figcaption>
+        <img src="/assets/front.png" alt="Přední strana" style="width:100%;height:auto;display:block;">
+        <figcaption>Přední strana</figcaption>
     </figure>
     <figure>
-        <img src="/assets/back.png" alt="Back pcb view" style="width:100%;height:auto;display:block;">
-        <figcaption>Back</figcaption>
+        <img src="/assets/back.png" alt="Zadní strana" style="width:100%;height:auto;display:block;">
+        <figcaption>Zadní strana</figcaption>
     </figure>
 </div>
 
