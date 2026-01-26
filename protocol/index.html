@@ -10,22 +10,28 @@
       
       
       
+        <link rel="canonical" href="https://pmod.robotikabrno.cz/protocol/">
       
       
+        <link rel="prev" href="..">
       
-      <link rel="icon" href="/assets/logo.svg">
+      
+        <link rel="next" href="ping/">
+      
+      
+      <link rel="icon" href="../assets/logo.svg">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
     
     
       
-        <title>RP-HUB75 driver</title>
+        <title>Protocol - RP-HUB75 driver</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,16 +50,25 @@
       
     
     
-      <link rel="stylesheet" href="/assets/style.css">
+      <link rel="stylesheet" href="../assets/style.css">
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  </head>
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -71,6 +86,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#protocol" class="md-skip">
+          Přeskočit obsah
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -81,9 +101,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Záhlaví">
-    <a href="/." title="RP-HUB75 driver" class="md-header__button md-logo" aria-label="RP-HUB75 driver" data-md-component="logo">
+    <a href=".." title="RP-HUB75 driver" class="md-header__button md-logo" aria-label="RP-HUB75 driver" data-md-component="logo">
       
-  <img src="/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -100,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Protocol
             
           </span>
         </div>
@@ -209,7 +229,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
     
@@ -225,11 +245,13 @@
         
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/protocol/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
     
@@ -264,9 +286,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigace" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="RP-HUB75 driver" class="md-nav__button md-logo" aria-label="RP-HUB75 driver" data-md-component="logo">
+    <a href=".." title="RP-HUB75 driver" class="md-nav__button md-logo" aria-label="RP-HUB75 driver" data-md-component="logo">
       
-  <img src="/assets/logo.svg" alt="logo">
+  <img src="../assets/logo.svg" alt="logo">
 
     </a>
     RP-HUB75 driver
@@ -314,7 +336,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="/." class="md-nav__link ">
+            <a href=".." class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -346,8 +368,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -362,17 +386,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -383,7 +410,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Komunikace
@@ -394,10 +421,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/protocol/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Protocol
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -406,6 +453,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Obsah">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Obsah
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-lenght" class="md-nav__link">
+    <span class="md-ellipsis">
+      Packet lenght
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#padding-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Padding (optional)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -418,7 +521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/protocol/ping/" class="md-nav__link">
+      <a href="ping/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -439,7 +542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/protocol/screen/" class="md-nav__link">
+      <a href="screen/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -460,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/protocol/usb/" class="md-nav__link">
+      <a href="usb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -498,6 +601,52 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Obsah
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command code
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-lenght" class="md-nav__link">
+    <span class="md-ellipsis">
+      Packet lenght
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#padding-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      Padding (optional)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -509,11 +658,63 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <div align="center">
-    <h1 >Ejhle, tady nic není...</h1>
-    <img class="fancy-image" src="/assets/logo.svg">
-  </div>
+                  
 
+  
+  
+
+
+<h1 id="protocol">Protocol<a class="headerlink" href="#protocol" title="Permanent link">¤</a></h1>
+<p>Board comunicates with the control board over SPI. </p>
+<p>Display board is <strong>slave</strong>, controling board is <strong>host</strong>,</p>
+<h2 id="command-code">Command code<a class="headerlink" href="#command-code" title="Permanent link">¤</a></h2>
+<p>8-bit value determining the command</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x00</td>
+<td>Ignore</td>
+</tr>
+<tr>
+<td>0x0X</td>
+<td>Ping</td>
+</tr>
+<tr>
+<td>0x1X</td>
+<td>Screen</td>
+</tr>
+<tr>
+<td>0x2X</td>
+<td>USB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="packet-lenght">Packet lenght<a class="headerlink" href="#packet-lenght" title="Permanent link">¤</a></h2>
+<p>16-bit / uint16 number determining the lenght in bytes of the comming data (not including the command code or packet lenght)</p>
+<p><strong>TODO</strong> - little/big endian</p>
+<h2 id="data">Data<a class="headerlink" href="#data" title="Permanent link">¤</a></h2>
+<p>Predetermined lenght of bytes representing what should be done / what happened. For example the display buffer or usb device feedback.</p>
+<h2 id="padding-optional">Padding (optional)<a class="headerlink" href="#padding-optional" title="Permanent link">¤</a></h2>
+<p>Few bytes as a padding to make sure the recieving device recieves the correct amount of data</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -616,15 +817,17 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/", "features": ["navigation.tabs", "navigation.indexes", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Zkop\u00edrov\u00e1no do schr\u00e1nky", "clipboard.copy": "Kop\u00edrovat do schr\u00e1nky", "search.result.more.one": "1 dal\u0161\u00ed na t\u00e9to str\u00e1nce", "search.result.more.other": "# v\u00edce na t\u00e9to str\u00e1nce", "search.result.none": "Nenalezeny \u017e\u00e1dn\u00e9 dokumenty", "search.result.one": "Nalezen\u00fd dokument: 1", "search.result.other": "Nalezen\u00e9 dokumenty: #", "search.result.placeholder": "Pi\u0161te co se m\u00e1 vyhledat", "search.result.term.missing": "Chyb\u011bj\u00edc\u00ed", "select.version": "Vyberte verzi"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.indexes", "navigation.top", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Zkop\u00edrov\u00e1no do schr\u00e1nky", "clipboard.copy": "Kop\u00edrovat do schr\u00e1nky", "search.result.more.one": "1 dal\u0161\u00ed na t\u00e9to str\u00e1nce", "search.result.more.other": "# v\u00edce na t\u00e9to str\u00e1nce", "search.result.none": "Nenalezeny \u017e\u00e1dn\u00e9 dokumenty", "search.result.one": "Nalezen\u00fd dokument: 1", "search.result.other": "Nalezen\u00e9 dokumenty: #", "search.result.placeholder": "Pi\u0161te co se m\u00e1 vyhledat", "search.result.term.missing": "Chyb\u011bj\u00edc\u00ed", "select.version": "Vyberte verzi"}}</script>
     
     
-      <script src="/assets/javascripts/bundle.081f42fc.min.js"></script>
+      <script src="../assets/javascripts/bundle.081f42fc.min.js"></script>
       
-        <script src="/js/open_in_new_tab.js"></script>
+        <script src="../js/open_in_new_tab.js"></script>
       
-        <script src="/js/auto_refresh_build_pages.js"></script>
+        <script src="../js/auto_refresh_build_pages.js"></script>
       
     
-  </body>
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
 </html>

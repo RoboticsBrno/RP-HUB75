@@ -2,7 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://pmod.robotikabrno.cz/</loc>
-         <lastmod>2026-01-04</lastmod>
+         <lastmod>2026-01-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pmod.robotikabrno.cz/protocol/</loc>
+         <lastmod>2026-01-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pmod.robotikabrno.cz/protocol/ping/</loc>
+         <lastmod>2026-01-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pmod.robotikabrno.cz/protocol/screen/</loc>
+         <lastmod>2026-01-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pmod.robotikabrno.cz/protocol/usb/</loc>
+         <lastmod>2026-01-26</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
