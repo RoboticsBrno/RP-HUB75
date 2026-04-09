@@ -101,7 +101,8 @@ static inline uint32_t gamma_correct_nv12(uint32_t pix_x, uint32_t pix_y) {
 // refresh loops //
 
 /*
- * accept an interleaved row pair buffer (RGBX0r0, RGBX0r1, RGBX1r0, RGBX1r1) and shift the out to the hub75 bus.
+ * accept an interleaved row pair buffer (RGBX0r0, RGBX0r1, RGBX1r0, RGBX1r1)
+ * and shift the out to the hub75 bus.
  */
 
 static inline void shift_and_latch_row(uint32_t row_idx, uint32_t inter_row[MAX_WIDTH][2]) {
@@ -174,13 +175,7 @@ void disp_init(PIO pio, uint32_t sm_data, uint32_t sm_row) {
         .sm_row = sm_row,
 
         .fb = NULL,
-        .mode = {
-            .pixel_format = DISP_FORMAT_NV12,
-            .flags = 0,
-
-            .width = 64,
-            .height = 64,
-        },
+        .mode = {0},
     };
 
     uint data_prog_offs = pio_add_program(pio, &hub75_data_rgb888_program);
@@ -198,10 +193,12 @@ static void disp_loop() {
 
         if (disp.next_fb) {
             disp.fb = disp.next_fb;
+            disp.mode = disp.next_mode;
+
             disp.next_fb = NULL;
         }
 
-        if (!disp.fb)
+        if (!disp.fb || !(disp.mode.magic_check & mode_magic))
             continue;
 
         uint64_t t0 = time_us_64();
