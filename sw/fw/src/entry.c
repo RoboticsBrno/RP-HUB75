@@ -13,6 +13,8 @@
 #include <pico/types.h>
 #include <stdio.h>
 
+#include "proto.h"
+
 union fb_buf {
     uint8_t rgb565[64][64][2];
     uint8_t rgb888[64][64][3];
@@ -21,12 +23,16 @@ union fb_buf {
         uint8_t y_plane[64][64];
         uint8_t uv_plane[32][32][2];
     } nv12;
+
+    uint8_t max[DISP_MAX_FRAME_SIZE];
 };
 
 union fb_buf fbs[2];
 struct disp_mode mode;
 
 extern uint32_t present_len;
+
+// stream parser //
 
 static void read_blocking(void *dst, uint32_t n_bytes) {
     uint32_t to_read = n_bytes;
@@ -44,18 +50,6 @@ static void read_blocking(void *dst, uint32_t n_bytes) {
     }
 }
 
-static const uint16_t sync_seq[8] = {
-    0xac92,
-    0x3bca,
-    0x41bf,
-    0x393d,
-    0xa74a,
-    0xae01,
-    0x155d,
-    0xfb70,
-};
-
-static const uint16_t sync_symbol = 0xfb70; // last state from lfsr.py
 static const uint16_t min_sync_steps = 2;
 
 static uint32_t scan_for_sync() {
@@ -84,8 +78,8 @@ static uint32_t scan_for_sync() {
             if (in_sync_steps++ < min_sync_steps)
                 continue; // minimal number of lfsr steps not reached, wait for next sync step
 
-            if (lfsr == sync_symbol)
-                return sync_symbol;
+            if (lfsr == disp_sync_symbol)
+                return disp_sync_symbol;
         }
 
         // scan timeout: discard some bytes to catch up; offset by odd amount of bytes to test the second 16-bit alignment
@@ -103,7 +97,7 @@ static void read_modeset() {
     struct disp_mode m;
     read_blocking(&m, sizeof(m));
 
-    if (m.magic_check != mode_magic)
+    if (m.magic != disp_mode_magic_value)
         return;
 
     mode = m;
@@ -112,7 +106,7 @@ static void read_modeset() {
 static void read_frame(uint32_t slot_idx) {
     uint32_t fb_size;
 
-    switch (mode.pixel_format) {
+    switch (mode.format) {
     case DISP_FORMAT_RGB565:
         fb_size = sizeof(fbs->rgb565);
         break;
@@ -139,13 +133,7 @@ int main() {
 
     stdio_init_all();
 
-    mode = (struct disp_mode){
-        .flags = 0,
-        .width = 64,
-        .height = 64,
-        .pixel_format = DISP_FORMAT_NV12,
-        .magic_check = mode_magic,
-    };
+    mode = (struct disp_mode){};
     disp_flip(NULL, &mode);
 
     uint32_t frame_idx = 0;
@@ -158,14 +146,14 @@ int main() {
         if (symbol == 0)
             continue;
 
-        // read_modeset();
+        read_modeset();
         read_frame(frame_idx % 2);
 #endif
 
         printf("frame_idx: %d present_len: %d us\n", frame_idx, present_len);
 
         void *fb = &fbs[frame_idx % 2];
-        disp_flip(fb, NULL);
+        disp_flip(fb, &mode);
 
         frame_idx++;
     }

@@ -10,9 +10,11 @@
 #include "hardware/pio.h"
 #include "hub75.pio.h"
 #include "pico/multicore.h"
+#include "proto.h"
 
 #include <assert.h>
 #include <hardware/timer.h>
+#include <pico/time.h>
 #include <stdio.h>
 
 #define DATA_BASE_PIN 0
@@ -69,7 +71,7 @@ static inline uint32_t gamma_correct_888(uint32_t pix) {
 
 static inline uint32_t gamma_correct_nv12(uint32_t pix_x, uint32_t pix_y) {
     // fetch planar pixel components
-    const uint32_t y_plane_size = disp.mode.width * disp.mode.height;
+    const uint32_t y_plane_size = disp.mode.width * 64;
     int16_t y = disp.fb[pix_x + disp.mode.width * pix_y];
 
     uint32_t uv_pix_idx = pix_x / 2 + (disp.mode.width / 2) * (pix_y / 2);
@@ -198,12 +200,12 @@ static void disp_loop() {
             disp.next_fb = NULL;
         }
 
-        if (!disp.fb || !(disp.mode.magic_check & mode_magic))
+        if (!disp.fb || disp.mode.magic != disp_mode_magic_value)
             continue;
 
         uint64_t t0 = time_us_64();
 
-        switch (disp.mode.pixel_format) {
+        switch (disp.mode.format) {
         case DISP_FORMAT_RGB565:
             refresh_display_565();
             break;

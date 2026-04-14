@@ -9,30 +9,7 @@
 #include <hardware/pio.h>
 #include <stdint.h>
 
-typedef uint8_t disp_flags_t;
-enum disp_flag_bits {
-    DISP_FLAG_DISABLE_GAMMA_CORRECTION = 0x1,
-    DISP_FLAG_DISABLE_STANDBY = 0x2,
-    DISP_FLAG_ENTER_SLEEP = 0x4,
-};
-
-typedef uint8_t disp_format_t;
-enum disp_format {
-    DISP_FORMAT_INVALID = 0,
-
-    DISP_FORMAT_RGB565, // (16 bpp)
-    DISP_FORMAT_RGB888, // (24 bpp) - also known as rgb24
-    DISP_FORMAT_NV12,   // (12 bpp)
-};
-
-static const uint32_t mode_magic = 0xceda2083;
-struct disp_mode {
-    disp_format_t pixel_format;
-    disp_flags_t flags;
-
-    uint16_t width, height;
-    uint32_t magic_check;
-};
+#include "proto.h"
 
 /*
  * initialize the display driver hardware. must be called before disp_start()

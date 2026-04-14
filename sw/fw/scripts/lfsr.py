@@ -1,21 +1,3 @@
-def lfsr_fib(lfsr):
-    # taps: 16 14 13 11; feedback polynomial: x^16 + x^14 + x^13 + x^11 + 1
-    bit = (lfsr ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) & 1
-    lfsr = (lfsr >> 1) | (bit << 15)
-    return lfsr
-
-def find_lfsr(start, target):
-    lfsr = start
-    period = 0
-
-    while True:
-        if lfsr == target:
-            return period
-
-        lfsr = lfsr_fib(lfsr)
-        print(hex(lfsr), bin(lfsr))
-        period += 1
-
 print("xorshift taps: 7, -9, 13")
 
 def lfsr_xs(lfsr):
@@ -37,7 +19,7 @@ def print_xorshift_seq(start, len):
     return seq
 
 sync_start_state = 0xac92
-sync_len = 8
+sync_len = 16
 
 print("sync lfsr xorshift sequence:\n")
 sync_seq = print_xorshift_seq(sync_start_state, sync_len)
