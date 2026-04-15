@@ -13,6 +13,8 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
     </figure>
 </div>
 
+Firmware a jeho dokumentace může být nalezen ve složce `sw/fw`. Mini driver pro pužití displaje pomocí USB je ve složce `sw/rawd`.
+
 ## Pinout
 
 ### Displej
@@ -47,3 +49,7 @@ Tato deska je **SPI SLAVE**, proto je MISO na TX pinu RP2350
 | 8  | SCK  | IO22 |
 | 9  | X1   | IO23 |
 | 10 | X2   | IO24 |
+
+## Licence
+
+Celý repositář je licencován pod MIT licencí s výjimkou složky `sw/fw`, která spadá pod licenci BSD-3-Clause.  
