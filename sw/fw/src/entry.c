@@ -18,42 +18,40 @@ extern uint32_t present_len;
 
 // stream parser //
 
-static const uint16_t min_sync_steps = 2;
+static const uint16_t min_sync_steps = 4;
 
 static uint32_t scan_for_sync() {
+    uint32_t in_sync_steps = 0;
+
     while (1) {
-        uint32_t in_sync_steps = 0;
-        uint16_t lfsr;
+        uint16_t buf[2];
 
         // read-in initial lfsr state
-        disp_recv_blocking(&lfsr, 2); // TODO: standby on timeout
+        disp_recv_blocking(buf, 4); // TODO: standby on timeout
 
-        while (1) {
-            // shift the lfsr by one step
-            lfsr ^= lfsr >> 7;
-            lfsr ^= lfsr << 9;
-            lfsr ^= lfsr >> 13;
+        uint16_t lfsr = buf[0], target = buf[1];
 
-            // check againts the incomming stream
-            uint16_t target;
-            disp_recv_blocking(&target, 2);
+        // shift the lfsr by one step
+        lfsr ^= lfsr >> 7;
+        lfsr ^= lfsr << 9;
+        lfsr ^= lfsr >> 13;
 
-            if (lfsr != target)
-                break; // lfsr chain broken, discard sync
+        if (lfsr != target) {
+            // sync seq broken, discard some bytes to catch up
+            uint8_t discard[12];
+            disp_recv_blocking(discard, 12);
 
-            if (in_sync_steps++ < min_sync_steps)
-                continue; // minimal number of lfsr steps not reached, wait for next sync step
+            // printf("sync failed: %d\n", in_sync_steps);
 
-            if (lfsr == disp_sync_symbol)
-                return disp_sync_symbol;
+            in_sync_steps = 0;
+            continue;
         }
 
-        // scan timeout: discard some bytes to catch up; offset by odd amount of bytes to test the second 16-bit alignment
-        uint8_t discard[4];
-        disp_recv_blocking(discard, 3);
+        if (in_sync_steps++ < min_sync_steps)
+            continue; // minimal number of lfsr steps not reached, wait for next sync step
 
-        // FIXME: also implement a qspi reset trigger
-        printf("sync failed: %d\n", in_sync_steps);
+        if (lfsr == disp_sync_symbol)
+            return disp_sync_symbol;
     }
 
     return 0;

@@ -41,7 +41,7 @@ static uint qspi_rx_sm;
 
 static void qspi_init(PIO pio, uint sm) {
     uint offset = pio_add_program(pio, &qspi_rx_program);
-    qspi_rx_program_init(pio, sm, offset, 19, 24);
+    qspi_rx_program_init(pio, sm, offset, 19, 23);
 
     qspi_rx_pio = pio;
     qspi_rx_sm = sm;

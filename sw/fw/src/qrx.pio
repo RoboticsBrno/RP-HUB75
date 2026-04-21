@@ -7,15 +7,15 @@
 .program qspi_rx
 
 ; Input pins are data bus
-; Input pin 5 is clk pin
-; Jump pin is cs pin
+; Input pin 6 is clk pin
+; Jump pin (5) is cs pin
 
-public qrx_reset:
+qrx_reset:
 	; reset input register (and possibly lose data)
 	mov isr, null
 
 	; await CS pin assert to sync with the next transaction
-	wait 0 jmppin
+	wait 1 jmppin
 	wait 0 jmppin
 
 .wrap_target
@@ -36,15 +36,15 @@ static inline void qspi_rx_program_init(PIO pio, uint sm, uint offset, uint data
 
 	sm_config_set_in_pins(&c, data_base);
 	sm_config_set_jmp_pin(&c, cs_pin);
-	pio_sm_set_consecutive_pindirs(pio, sm, data_base, 4 + 1, false);
+	pio_sm_set_consecutive_pindirs(pio, sm, data_base, 4 + 2, false);
 	pio_sm_set_consecutive_pindirs(pio, sm, cs_pin, 1, false);
 
 	pio_gpio_init(pio, cs_pin);
-	for (uint i = 0; i < 4 + 1; i++)
+	for (uint i = 0; i < 4 + 2; i++)
 		pio_gpio_init(pio, data_base + i);
 
-	// shift-to-left, autopush == true, threshold == 32
-	sm_config_set_in_shift(&c, false, true, 32);
+	// shift-to-right, autopush == true, threshold == 32
+	sm_config_set_in_shift(&c, true, true, 32);
 
 	// 8 levels deep RX fifo, 0 levels deep TX fifo
 	sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);

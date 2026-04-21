@@ -73,4 +73,6 @@ struct disp_mode {
 
     uint16_t width; // arbitrary, if width is bigger than the display row length, data is output to the next daisy chained display
                     // height is always assumed to equal 64
+
+    uint16_t __padding; // align struct to 4 bytes
 };
