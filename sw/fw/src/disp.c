@@ -37,6 +37,8 @@ struct disp_state {
     const uint8_t *fb;
     struct disp_mode mode;
 
+    uint32_t oe_period;
+
     // note: accessed by both cores, must be volatile
     const uint8_t *volatile next_fb;
     struct disp_mode volatile next_mode;
@@ -266,6 +268,7 @@ static void disp_loop() {
             disp.fb = disp.next_fb;
             disp.mode = disp.next_mode;
 
+            disp.oe_period = ((uint32_t)disp.mode.brightness * 100 / 255);
             disp.next_fb = NULL;
         }
 
@@ -280,6 +283,19 @@ static void disp_loop() {
             refresh_display();
 
         present_len = (uint32_t)(time_us_64() - t0);
+
+        // by default brightness ajustment only works if oe_period is smaller than the time it takes
+        // to shift in a new row. in the opposite case the oe_period does give a row longer to light up
+        // but it also causes the entire frame to take longer to refresh, canceling out any aditional
+        // brightness on average.
+        //
+        // the trick here is to fix the frame period to a fixed number, and sleep the remaining time
+        // if a frame finishes earlier. this in effect increses the oe_period granularity, but does not
+        // in any way change the panels brightness range!
+        //
+        // 6000us are choosen here for ~166Hz stable refresh rate, which should cover most configs.
+        if (present_len < 6000)
+            sleep_us(6000 - present_len);
     }
 }
 
