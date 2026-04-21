@@ -32,22 +32,29 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 ### Konektor
 
 !!! note
-    Tato deska je **SPI SLAVE**, proto je MISO na TX pinu RP2350
+    Je možno použít QSPI nebo SPI, v tom případě musí být TX na MISO/RX pinu master desky!
 
 | Konektor (pin) | Signál | RP2350 |
 |---:|---|:---|
-| 1  | GND  | GND  |
-| 2  | 5V   | 5V   |
-| 3  | 5V   | 5V   |
-| 4  | MISO | IO19 |
-| 5  | MOSI | IO20 |
-| 6  | CS   | IO21 |
-| 7  | SCK  | IO22 |
-| 8  | GND  | GND  |
-| 9  | EX1  | IO23 |
-| 10 | EX2  | IO24 |
+| 1  | GND   | GND  |
+| 2  | 5V    | 5V   |
+| 3  | 5V    | 5V   |
+| 4  | D0    | IO19 |
+| 5  | D1    | IO20 |
+| 6  | D2    | IO21 |
+| 7  | D3    | IO22 |
+| 8  | GND   | GND  |
+| 9  | CS    | IO23 |
+| 10 | CK    | IO24 |
 
+### Extra konektor
+- Na desce jsou vyvedené 2 extra datové piny na kterých je přístupné I2C a UART pro další rozšíření. (není implementováno)
+
+| Pin | I2C | UART |
+|---:|---|---|
+| 14  | SDA  | TX  |
+| 15  | SCL  | RX  |
 
 ### DBG & PWR Led
-- Debug/status led - IO26
+- Debug/status led - IO18
 - Power led - 3V3
