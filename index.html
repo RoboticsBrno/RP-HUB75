@@ -561,6 +561,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#extra-konektor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra konektor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#dbg-pwr-led" class="md-nav__link">
     <span class="md-ellipsis">
       DBG &amp; PWR Led
@@ -670,7 +679,7 @@
 <h3 id="konektor">Konektor<a class="headerlink" href="#konektor" title="Permanent link">¤</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Tato deska je <strong>SPI SLAVE</strong>, proto je MISO na TX pinu RP2350</p>
+<p>Je možno použít QSPI nebo SPI, v tom případě musí být TX na MISO/RX pinu master desky!</p>
 </div>
 <table>
 <thead>
@@ -698,22 +707,22 @@
 </tr>
 <tr>
 <td style="text-align: right;">4</td>
-<td>MISO</td>
+<td>D0</td>
 <td style="text-align: left;">IO19</td>
 </tr>
 <tr>
 <td style="text-align: right;">5</td>
-<td>MOSI</td>
+<td>D1</td>
 <td style="text-align: left;">IO20</td>
 </tr>
 <tr>
 <td style="text-align: right;">6</td>
-<td>CS</td>
+<td>D2</td>
 <td style="text-align: left;">IO21</td>
 </tr>
 <tr>
 <td style="text-align: right;">7</td>
-<td>SCK</td>
+<td>D3</td>
 <td style="text-align: left;">IO22</td>
 </tr>
 <tr>
@@ -723,19 +732,44 @@
 </tr>
 <tr>
 <td style="text-align: right;">9</td>
-<td>EX1</td>
+<td>CS</td>
 <td style="text-align: left;">IO23</td>
 </tr>
 <tr>
 <td style="text-align: right;">10</td>
-<td>EX2</td>
+<td>CK</td>
 <td style="text-align: left;">IO24</td>
+</tr>
+</tbody>
+</table>
+<h3 id="extra-konektor">Extra konektor<a class="headerlink" href="#extra-konektor" title="Permanent link">¤</a></h3>
+<ul>
+<li>Na desce jsou vyvedené 2 extra datové piny na kterých je přístupné I2C a UART pro další rozšíření. (není implementováno)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Pin</th>
+<th>I2C</th>
+<th>UART</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">14</td>
+<td>SDA</td>
+<td>TX</td>
+</tr>
+<tr>
+<td style="text-align: right;">15</td>
+<td>SCL</td>
+<td>RX</td>
 </tr>
 </tbody>
 </table>
 <h3 id="dbg-pwr-led">DBG &amp; PWR Led<a class="headerlink" href="#dbg-pwr-led" title="Permanent link">¤</a></h3>
 <ul>
-<li>Debug/status led - IO26</li>
+<li>Debug/status led - IO18</li>
 <li>Power led - 3V3</li>
 </ul>
 
