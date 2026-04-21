@@ -49,7 +49,7 @@ uint32_t present_len;
 
 // pixel processing //
 
-static inline uint32_t gamma_correct_565(uint16_t pix) {
+static inline uint32_t gamma_correct_565(uint32_t pix) {
     uint32_t r_gamma = pix & 0xf800u;
     r_gamma *= r_gamma;
     uint32_t g_gamma = pix & 0x07e0u;
@@ -59,7 +59,7 @@ static inline uint32_t gamma_correct_565(uint16_t pix) {
     return (b_gamma >> 2 << 16) | (g_gamma >> 14 << 8) | (r_gamma >> 24 << 0);
 }
 
-static inline uint32_t gamma_correct_888(uint32_t pix) {
+static inline uint32_t gamma_correct_rgbx(uint32_t pix) {
     uint64_t r_gamma = pix & 0x000000ff;
     r_gamma *= r_gamma;
     uint64_t g_gamma = pix & 0x0000ff00;
@@ -69,7 +69,38 @@ static inline uint32_t gamma_correct_888(uint32_t pix) {
     return (b_gamma >> 40 << 16) | (g_gamma >> 24 << 8) | (r_gamma >> 8 << 0);
 }
 
-static inline uint32_t gamma_correct_nv12(uint32_t pix_x, uint32_t pix_y) {
+static inline uint32_t process_pixel_565(uint32_t pix_x, uint32_t pix_y) {
+    uint16_t pix = *(uint16_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 2];
+    return gamma_correct_565(pix);
+}
+
+static inline uint32_t process_pixel_565_lin(uint32_t pix_x, uint32_t pix_y) {
+    uint16_t pix = *(uint16_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 2];
+    return ((pix & 0x001fu) << 19) | ((pix & 0x07e0u) >> 5 << 10) | ((pix & 0xf800u) >> 11 << 3);
+}
+
+static inline uint32_t process_pixel_rgb(uint32_t pix_x, uint32_t pix_y) {
+    // TODO: unaligned reads?
+    uint32_t pix = *(uint32_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 3];
+    return gamma_correct_rgbx(pix);
+}
+
+static inline uint32_t process_pixel_rgbx(uint32_t pix_x, uint32_t pix_y) {
+    uint32_t pix = *(uint32_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 4];
+    return gamma_correct_rgbx(pix);
+}
+
+static inline uint32_t process_pixel_rgb_lin(uint32_t pix_x, uint32_t pix_y) {
+    // TODO: unaligned reads?
+    return *(uint32_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 3];
+}
+
+static inline uint32_t process_pixel_rgbx_lin(uint32_t pix_x, uint32_t pix_y) {
+    // note: 8 MSBs will be discarded by the output logic
+    return *(uint32_t *)&disp.fb[(pix_y * disp.mode.width + pix_x) * 4];
+}
+
+static inline uint32_t process_pixel_nv12(uint32_t pix_x, uint32_t pix_y) {
     // fetch planar pixel components
     const uint32_t y_plane_size = disp.mode.width * 64;
     int16_t y = disp.fb[pix_x + disp.mode.width * pix_y];
@@ -90,11 +121,11 @@ static inline uint32_t gamma_correct_nv12(uint32_t pix_x, uint32_t pix_y) {
     uint8_t b = y + (1.770f * u);
 
     // gamma correction
-    uint64_t r_gamma = r;
+    uint32_t r_gamma = r;
     r_gamma *= r_gamma;
-    uint64_t g_gamma = g;
+    uint32_t g_gamma = g;
     g_gamma *= g_gamma;
-    uint64_t b_gamma = b;
+    uint32_t b_gamma = b;
     b_gamma *= b_gamma;
 
     return (b_gamma >> 8 << 16) | (g_gamma >> 8 << 8) | (r_gamma >> 8 << 0);
@@ -130,45 +161,83 @@ static inline void shift_and_latch_row(uint32_t row_idx, uint32_t inter_row[MAX_
         int rowsel = (row_idx << 1) | (row_idx >> (ROWSEL_N_PINS - 1)) & ((1 << ROWSEL_N_PINS) - 1);
 
         // Latch row data, pulse output enable for new row.
-        pio_sm_put_blocking(disp.pio, disp.sm_row, rowsel | (50u * (1u << bit) << 5));
+        pio_sm_put_blocking(disp.pio, disp.sm_row, rowsel | (disp.oe_period * (1u << bit) << 5));
     }
 }
 
 static uint32_t gc_rows[MAX_WIDTH][2];
 
-static void refresh_display_565() {
-    for (int row_idx = 0; row_idx < (1 << ROWSEL_N_PINS); ++row_idx) {
-        for (int x = 0; x < disp.mode.width; ++x) {
-            gc_rows[x][0] = gamma_correct_565(*(uint16_t *)&disp.fb[(row_idx * disp.mode.width + x) * 2]);
-            gc_rows[x][1] = gamma_correct_565(*(uint16_t *)&disp.fb[(((1u << ROWSEL_N_PINS) + row_idx) * disp.mode.width + x) * 2]);
-        }
+#define DEFINE_REFRESH_LOOP(format_name, proc_pixel)                              \
+    static void refresh_display_##format_name() {                                 \
+        for (int row_idx = 0; row_idx < (1 << ROWSEL_N_PINS); ++row_idx) {        \
+            for (int x = 0; x < disp.mode.width; ++x) {                           \
+                gc_rows[x][0] = proc_pixel(x, row_idx);                           \
+                gc_rows[x][1] = proc_pixel(x, ((1u << ROWSEL_N_PINS) + row_idx)); \
+            }                                                                     \
+                                                                                  \
+            shift_and_latch_row(row_idx, gc_rows);                                \
+        }                                                                         \
+    }
 
-        shift_and_latch_row(row_idx, gc_rows);
+// rgb
+DEFINE_REFRESH_LOOP(565_lin, process_pixel_565_lin);
+DEFINE_REFRESH_LOOP(565, process_pixel_565);
+DEFINE_REFRESH_LOOP(rgb_lin, process_pixel_rgb_lin);
+DEFINE_REFRESH_LOOP(rgb, process_pixel_rgb);
+DEFINE_REFRESH_LOOP(rgbx_lin, process_pixel_rgbx_lin);
+DEFINE_REFRESH_LOOP(rgbx, process_pixel_rgbx);
+
+// nv12
+DEFINE_REFRESH_LOOP(nv12_lin, process_pixel_nv12); // FIXME: linear nv12 decode
+DEFINE_REFRESH_LOOP(nv12, process_pixel_nv12);
+
+static void refresh_display_linear() {
+    switch (disp.mode.format) {
+    case DISP_FORMAT_RGB565:
+        refresh_display_565_lin();
+        break;
+
+    case DISP_FORMAT_RGB888:
+        refresh_display_rgb_lin();
+        break;
+
+    case DISP_FORMAT_RGBX8888:
+        refresh_display_rgbx_lin();
+        break;
+
+    case DISP_FORMAT_NV12:
+        refresh_display_nv12_lin();
+        break;
+
+    default:
+        assert(false && "Unreachable");
     }
 }
 
-static void refresh_display_888() {
-    for (int row_idx = 0; row_idx < (1 << ROWSEL_N_PINS); ++row_idx) {
-        for (int x = 0; x < disp.mode.width; ++x) {
-            // TODO: unaligned reads?
-            gc_rows[x][0] = gamma_correct_888(*(uint32_t *)&disp.fb[(row_idx * disp.mode.width + x) * 3]);
-            gc_rows[x][1] = gamma_correct_888(*(uint32_t *)&disp.fb[(((1u << ROWSEL_N_PINS) + row_idx) * disp.mode.width + x) * 3]);
-        }
+static void refresh_display() {
+    switch (disp.mode.format) {
+    case DISP_FORMAT_RGB565:
+        refresh_display_565();
+        break;
 
-        shift_and_latch_row(row_idx, gc_rows);
+    case DISP_FORMAT_RGB888:
+        refresh_display_rgb();
+        break;
+
+    case DISP_FORMAT_RGBX8888:
+        refresh_display_rgbx();
+        break;
+
+    case DISP_FORMAT_NV12:
+        refresh_display_nv12();
+        break;
+
+    default:
+        assert(false && "Unreachable");
     }
 }
 
-static void refresh_display_nv12() {
-    for (int row_idx = 0; row_idx < (1 << ROWSEL_N_PINS); ++row_idx) {
-        for (int x = 0; x < disp.mode.width; ++x) {
-            gc_rows[x][0] = gamma_correct_nv12(x, row_idx);
-            gc_rows[x][1] = gamma_correct_nv12(x, ((1u << ROWSEL_N_PINS) + row_idx));
-        }
-
-        shift_and_latch_row(row_idx, gc_rows);
-    }
-}
+// public api //
 
 void disp_init(PIO pio, uint32_t sm_data, uint32_t sm_row) {
     disp = (struct disp_state){
@@ -205,22 +274,10 @@ static void disp_loop() {
 
         uint64_t t0 = time_us_64();
 
-        switch (disp.mode.format) {
-        case DISP_FORMAT_RGB565:
-            refresh_display_565();
-            break;
-
-        case DISP_FORMAT_RGB888:
-            refresh_display_888();
-            break;
-
-        case DISP_FORMAT_NV12:
-            refresh_display_nv12();
-            break;
-
-        default:
-            assert(false && "Unreachable");
-        }
+        if (disp.mode.flags & DISP_FLAG_DISABLE_GAMMA_CORRECTION)
+            refresh_display_linear();
+        else
+            refresh_display();
 
         present_len = (uint32_t)(time_us_64() - t0);
     }

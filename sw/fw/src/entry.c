@@ -18,7 +18,7 @@ extern uint32_t present_len;
 
 // stream parser //
 
-static const uint16_t min_sync_steps = 4;
+static const uint16_t min_sync_steps = 2;
 
 static uint32_t scan_for_sync() {
     uint32_t in_sync_steps = 0;
@@ -79,6 +79,10 @@ static void read_frame(uint32_t slot_idx) {
         fb_size = mode.width * 64 * 3;
         break;
 
+    case DISP_FORMAT_RGBX8888:
+        fb_size = mode.width * 64 * 4;
+        break;
+
     case DISP_FORMAT_NV12:
         fb_size = mode.width * 64 + mode.width * 64 / 4 * 2;
         break;
@@ -113,7 +117,7 @@ int main() {
         read_modeset();
         read_frame(frame_idx % 2);
 
-        printf("frame_idx: %d present_len: %d us\n", frame_idx, present_len);
+        printf("frame_idx: %d refresh_period: %d us\n", frame_idx, present_len);
 
         void *fb = &fbs[frame_idx % 2];
         disp_flip(fb, &mode);
