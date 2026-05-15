@@ -35,7 +35,9 @@ Firmware a jeho dokumentace může být nalezen ve složce `sw/fw`. Mini driver 
 
 !!! note
     Je možno použít QSPI nebo SPI, v tom případě musí být TX na MISO/RX pinu master desky!
-
+    
+| Konektor (pin) | Signál | RP2350 |
+|---:|---|:---|
 | 1  | GND | GND  |
 | 2  | 5V  | 5V   |
 | 3  | 5V  | 5V   |
