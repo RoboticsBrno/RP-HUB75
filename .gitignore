@@ -177,3 +177,5 @@ node_modules/
 *cache
 
 hw/out/*
+
+_autosave*
