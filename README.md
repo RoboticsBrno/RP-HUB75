@@ -13,6 +13,8 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
     </figure>
 </div>
 
+Firmware a jeho dokumentace může být nalezen ve složce `sw/fw`. Mini driver pro pužití displaje pomocí USB je ve složce `sw/rawd`.
+
 ## Pinout
 
 ### Displej
@@ -34,8 +36,6 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 !!! note
     Je možno použít QSPI nebo SPI, v tom případě musí být TX na MISO/RX pinu master desky!
 
-| Konektor (pin) | Signál | RP2350 |
-|---:|---|:---|
 | 1  | GND | GND  |
 | 2  | 5V  | 5V   |
 | 3  | 5V  | 5V   |
@@ -46,6 +46,7 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 | 8  | GND | GND  |
 | 9  | CS  | IO23 |
 | 10 | CK  | IO24 |
+
 
 ### Extra konektor
 - Na desce jsou vyvedené 2 extra datové piny na kterých je přístupné I2C a UART pro další rozšíření. (není implementováno)
@@ -58,3 +59,6 @@ Deska pro řízení HUB75 displejů založená na čipu [RP2350](https://www.ras
 ### DBG & PWR Led
 - Debug/status led - IO18
 - Power led - 3V3
+
+## Licence
+Celý repositář je licencován pod MIT licencí s výjimkou složky `sw/fw`, která spadá pod licenci BSD-3-Clause.  

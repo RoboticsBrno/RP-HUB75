@@ -1,3 +1,0 @@
-[submodule "sw/fw"]
-	path = sw/fw
-	url = https://github.com/C2Coder/rpio
