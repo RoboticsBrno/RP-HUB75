@@ -1,0 +1,31 @@
+Drill report for rp-hub75-panel.kicad_pcb
+Created on 2026-06-05T21:52:36
+
+Copper Layer Stackup:
+    =============================================================
+    L1 :  F.Cu                      front
+    L2 :  B.Cu                      back
+
+
+Drill file 'rp-hub75-panel-PTH.drl' contains
+    plated through holes:
+    =============================================================
+    T1  0.300mm  0.0118"  (224 holes))
+    T2  0.300mm  0.0118"  (18 holes))
+    T3  0.600mm  0.0236"  (8 holes)  (with 8 slots)
+    T4  0.920mm  0.0362"  (8 holes))
+    T5  1.000mm  0.0394"  (48 holes))
+    T6  1.300mm  0.0512"  (4 holes))
+    T7  2.300mm  0.0906"  (4 holes))
+
+    Total plated holes count 314
+
+
+Drill file 'rp-hub75-panel-NPTH.drl' contains
+    unplated through holes:
+    =============================================================
+    T1  0.500mm  0.0197"  (24 holes))
+    T2  0.650mm  0.0256"  (4 holes))
+    T3  3.200mm  0.1260"  (2 holes))
+
+    Total unplated holes count 30

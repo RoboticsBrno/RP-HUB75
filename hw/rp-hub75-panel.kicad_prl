@@ -2,10 +2,10 @@
   "board": {
     "active_layer": 0,
     "active_layer_preset": "",
-    "auto_track_width": false,
+    "auto_track_width": true,
     "hidden_netclasses": [],
     "hidden_nets": [],
-    "high_contrast_mode": 1,
+    "high_contrast_mode": 0,
     "net_color_mode": 1,
     "opacity": {
       "images": 0.6,
@@ -49,9 +49,11 @@
       "drc_exclusions",
       "locked_item_shadows",
       "conflict_shadows",
-      "shapes"
+      "shapes",
+      "board_outline_area",
+      "ly_points"
     ],
-    "visible_layers": "ffffffff_ffffffff_ffffffff_ffffffff",
+    "visible_layers": "00000000_00000000_0fffffff_ffffffff",
     "zone_display_mode": 0
   },
   "git": {
@@ -61,7 +63,7 @@
     "ssh_key": ""
   },
   "meta": {
-    "filename": "rp-hub75.kicad_prl",
+    "filename": "rp-hub75-panel.kicad_prl",
     "version": 5
   },
   "net_inspector_panel": {
@@ -90,16 +92,16 @@
       9
     ],
     "col_widths": [
-      78,
-      81,
-      124,
+      222,
+      207,
+      136,
       131,
-      131,
-      107,
+      136,
+      136,
       198,
       116,
-      49,
-      50
+      136,
+      136
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
